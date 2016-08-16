@@ -1,6 +1,6 @@
 {
-  "name": "generator-ninthlink",
-  "version": "1.2.8",
+  "name": "generator-landers",
+  "version": "1.0.0",
   "description": "generator-webapp + uncss, bootlint, etc.",
   "license": "BSD-2-Clause",
   "repository": "jeffreysbrother/generator-ninthlink",
@@ -31,7 +31,8 @@
     "bootstrap",
     "bootlint",
     "BrowserSync",
-    "minification"
+    "minification",
+    "landing pages"
   ],
   "dependencies": {
     "chalk": "^1.0.0",
