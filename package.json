@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "generator-webapp + uncss, bootlint, etc.",
   "license": "BSD-2-Clause",
-  "repository": "jeffreysbrother/generator-ninthlink",
+  "repository": "ninthlink/generator-landers",
   "author": "The Yeoman Team and James Cool",
   "main": "app/index.js",
   "engines": {
