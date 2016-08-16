@@ -41,7 +41,7 @@ module.exports = generators.Base.extend({
       testLocal = require.resolve('generator-jasmine/generators/app/index.js');
     }
 
-    this.composeWith(this.options['test-framework'] + ':app', {
+    this.composeWith(this.options['test-framework'] + ':clients', {
       options: {
         'skip-install': this.options['skip-install']
       }
@@ -86,7 +86,7 @@ module.exports = generators.Base.extend({
         name: 'replace Google Analytics with Google Tag Manager?',
         value: 'includeTagManager',
         checked: false
-      }]
+      },]
     }, {
       type: 'confirm',
       name: 'includeJQuery',
@@ -95,6 +95,18 @@ module.exports = generators.Base.extend({
       when: function (answers) {
         return answers.features.indexOf('includeBootstrap') === -1;
       }
+    }, {
+      type: 'input',
+      name: 'clientName',
+      message: 'Client name?'
+    }, {
+      type: 'input',
+      name: 'dirName',
+      message: 'Directory Name? (e.g. lp)'
+    }, {
+      type: 'input',
+      name: 'dirNumber',
+      message: 'Incarnation?'
     }];
 
     this.prompt(prompts, function (answers) {
@@ -157,7 +169,7 @@ module.exports = generators.Base.extend({
     htaccess: function () {
       this.fs.copy(
         this.templatePath('htaccess'),
-        this.destinationPath('app/.htaccess')
+        this.destinationPath('clients/.htaccess')
       );
     },
 
@@ -228,17 +240,17 @@ module.exports = generators.Base.extend({
     h5bp: function () {
       this.fs.copy(
         this.templatePath('favicon.ico'),
-        this.destinationPath('app/favicon.ico')
+        this.destinationPath('clients/favicon.ico')
       );
 
       this.fs.copy(
         this.templatePath('apple-touch-icon.png'),
-        this.destinationPath('app/apple-touch-icon.png')
+        this.destinationPath('clients/apple-touch-icon.png')
       );
 
       this.fs.copy(
         this.templatePath('robots.txt'),
-        this.destinationPath('app/robots.txt'));
+        this.destinationPath('clients/robots.txt'));
     },
 
     styles: function () {
@@ -254,19 +266,19 @@ module.exports = generators.Base.extend({
         
         this.fs.copy(
           this.templatePath(header_partial),
-          this.destinationPath('app/styles/' + header_partial));
+          this.destinationPath('clients/styles/' + header_partial));
         this.fs.copy(
           this.templatePath(footer_partial),
-          this.destinationPath('app/styles/' + footer_partial));
+          this.destinationPath('clients/styles/' + footer_partial));
         this.fs.copy(
           this.templatePath(variables_partial),
-          this.destinationPath('app/styles/' + variables_partial));
+          this.destinationPath('clients/styles/' + variables_partial));
         this.fs.copy(
           this.templatePath(components_partial),
-          this.destinationPath('app/styles/' + components_partial));
+          this.destinationPath('clients/styles/' + components_partial));
         this.fs.copy(
           this.templatePath(utilities_partial),
-          this.destinationPath('app/styles/' + utilities_partial));
+          this.destinationPath('clients/styles/' + utilities_partial));
           
       } else {
         css += '.css';
@@ -274,7 +286,7 @@ module.exports = generators.Base.extend({
 
       this.fs.copyTpl(
         this.templatePath(css),
-        this.destinationPath('app/styles/' + css),
+        this.destinationPath('clients/styles/' + css),
         {
           includeBootstrap: this.includeBootstrap
         }
@@ -286,7 +298,7 @@ module.exports = generators.Base.extend({
     scripts: function () {
       this.fs.copy(
         this.templatePath('main.js'),
-        this.destinationPath('app/scripts/main.js')
+        this.destinationPath('clients/scripts/main.js')
       );
     },
 
@@ -306,7 +318,7 @@ module.exports = generators.Base.extend({
 
       this.fs.copyTpl(
         this.templatePath('index.html'),
-        this.destinationPath('app/index.html'),
+        this.destinationPath('clients/index.html'),
         {
           appname: this.appname,
           includeSass: this.includeSass,
@@ -334,8 +346,8 @@ module.exports = generators.Base.extend({
     },
 
     misc: function () {
-      mkdirp('app/images');
-      mkdirp('app/fonts');
+      mkdirp('clients/images');
+      mkdirp('clients/fonts');
       
       // initialize Git repo prior to installing dependencies,
       // so it still works if the user skips dependency installation
@@ -372,7 +384,7 @@ module.exports = generators.Base.extend({
       directory: 'bower_components',
       exclude: ['bootstrap-sass', 'bootstrap.js'],
       ignorePath: /^(\.\.\/)*\.\./,
-      src: 'app/index.html'
+      src: 'clients/index.html'
     });
 
     if (this.includeSass) {
@@ -381,7 +393,7 @@ module.exports = generators.Base.extend({
         bowerJson: bowerJson,
         directory: 'bower_components',
         ignorePath: /^(\.\.\/)+/,
-        src: 'app/styles/*.scss'
+        src: 'clients/styles/*.scss'
       });
     }
     
